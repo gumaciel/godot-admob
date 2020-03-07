@@ -7,70 +7,147 @@
 #define CLASS_DB ObjectTypeDB
 #endif
 
+GodotAdmob *GodotAdmob::instance = NULL; //<< INIT NULL VAR ON COMPILE TIME!
 
 GodotAdmob::GodotAdmob() {
+    initialized = false;
+    banner = NULL; 
+    interstitial  = NULL;
+    rewarded = NULL;
+    //
+    ERR_FAIL_COND(instance != NULL); //<< SUCCESS!!! FIRST 
+
+    instance = this;
 }
 
 GodotAdmob::~GodotAdmob() {
+   if (initialized) {
+       [banner release]; //free banner
+       [interstitial release]; //free
+       [rewarded release]; //free
+   }
+
+   if (instance == this) {
+       instance = NULL;
+   }
 }
 
 void GodotAdmob::init(bool isReal, int instanceId) {
-    banner = [AdmobBanner alloc];
+   if (instance != this) {
+        NSLog(@"GodotAdmob Module dublicate singleton");
+        return;
+   }
+   if (initialized) {
+        NSLog(@"GodotAdmob Module already initialized");
+        return;
+    }
+    
+    initialized = true;
+    
+    banner = [[AdmobBanner alloc] init];
     [banner initialize :isReal :instanceId];
     
-    interstitial = [AdmobInterstitial alloc];
-    [interstitial initialize:isReal :instanceId :banner];
+    interstitial = [[AdmobInterstitial alloc] init];
+    [interstitial initialize:isReal :instanceId];
     
-    rewarded = [AdmobRewarded alloc];
-    [rewarded initialize:isReal :instanceId :banner];
+    rewarded = [[AdmobRewarded alloc] init];
+    [rewarded initialize:isReal :instanceId];
 }
 
 
 void GodotAdmob::loadBanner(const String &bannerId, bool isOnTop) {
+    if (!initialized) {
+        NSLog(@"GodotAdmob Module not initialized");
+        return;
+    }
+    
     NSString *idStr = [NSString stringWithCString:bannerId.utf8().get_data() encoding: NSUTF8StringEncoding];
     [banner loadBanner:idStr :isOnTop];
 
 }
 
 void GodotAdmob::showBanner() {
+    if (!initialized) {
+        NSLog(@"GodotAdmob Module not initialized");
+        return;
+    }
+    
     [banner showBanner];
 }
 
 void GodotAdmob::hideBanner() {
+    if (!initialized) {
+        NSLog(@"GodotAdmob Module not initialized");
+        return;
+    }
     [banner hideBanner];
 }
 
 
 void GodotAdmob::resize() {
+    if (!initialized) {
+        NSLog(@"GodotAdmob Module not initialized");
+        return;
+    }
     [banner resize];
 }
 
 int GodotAdmob::getBannerWidth() {
+    if (!initialized) {
+        NSLog(@"GodotAdmob Module not initialized");
+        return 0;
+    }
     return (uintptr_t)[banner getBannerWidth];
 }
 
 int GodotAdmob::getBannerHeight() {
+    if (!initialized) {
+        NSLog(@"GodotAdmob Module not initialized");
+        return 0;
+    }
     return (uintptr_t)[banner getBannerHeight];
 }
 
 void GodotAdmob::loadInterstitial(const String &interstitialId) {
+    if (!initialized) {
+        NSLog(@"GodotAdmob Module not initialized");
+        return;
+    }
+    
     NSString *idStr = [NSString stringWithCString:interstitialId.utf8().get_data() encoding: NSUTF8StringEncoding];
     [interstitial loadInterstitial:idStr];
 
 }
 
 void GodotAdmob::showInterstitial() {
+    if (!initialized) {
+        NSLog(@"GodotAdmob Module not initialized");
+        return;
+    }
+    
     [interstitial showInterstitial];
     
 }
 
 void GodotAdmob::loadRewardedVideo(const String &rewardedId) {
+    //init
+    if (!initialized) {
+        NSLog(@"GodotAdmob Module not initialized");
+        return;
+    }
+    
     NSString *idStr = [NSString stringWithCString:rewardedId.utf8().get_data() encoding: NSUTF8StringEncoding];
     [rewarded loadRewardedVideo: idStr];
     
 }
 
 void GodotAdmob::showRewardedVideo() {
+    //show
+    if (!initialized) {
+        NSLog(@"GodotAdmob Module not initialized");
+        return;
+    }
+    
     [rewarded showRewardedVideo];
 }
 
