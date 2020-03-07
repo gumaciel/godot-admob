@@ -29,6 +29,9 @@ class GodotAdmob : public Reference {
     OBJ_TYPE(GodotAdmob, Reference);
 #endif
 
+    bool initialized;
+    static GodotAdmob *instance; //fix
+    
     bannerPtr banner;
     interstitialPtr interstitial;
     rewardedPtr rewarded;
