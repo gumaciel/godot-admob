@@ -33,11 +33,11 @@ GodotAdmob::~GodotAdmob() {
 }
 
 void GodotAdmob::init(bool isReal, int instanceId) {
-   if (instance != this) {
+    if (instance != this) {
         NSLog(@"GodotAdmob Module dublicate singleton");
         return;
-   }
-   if (initialized) {
+    }
+    if (initialized) {
         NSLog(@"GodotAdmob Module already initialized");
         return;
     }
@@ -48,12 +48,33 @@ void GodotAdmob::init(bool isReal, int instanceId) {
     [banner initialize :isReal :instanceId];
     
     interstitial = [[AdmobInterstitial alloc] init];
-    [interstitial initialize:isReal :instanceId];
+    [interstitial initialize :isReal :instanceId :banner];
     
     rewarded = [[AdmobRewarded alloc] init];
-    [rewarded initialize:isReal :instanceId];
+    [rewarded initialize :isReal :instanceId :banner];
 }
 
+void GodotAdmob::initWithContentRating(bool isReal, int instanceId, bool child_directed, bool is_personalized, const String &max_ad_content_rate) {
+    if (instance != this) {
+        NSLog(@"GodotAdmob Module dublicate singleton");
+        return;
+    }
+    if (initialized) {
+        NSLog(@"GodotAdmob Module already initialized");
+        return;
+    }
+    
+    initialized = true;
+    
+    banner = [[AdmobBanner alloc] init];
+    [banner initialize :isReal :instanceId];
+    
+    interstitial = [[AdmobInterstitial alloc] init];
+    [interstitial initialize :isReal :instanceId :banner];
+    
+    rewarded = [[AdmobRewarded alloc] init];
+    [rewarded initialize :isReal :instanceId :banner];
+}
 
 void GodotAdmob::loadBanner(const String &bannerId, bool isOnTop) {
     if (!initialized) {
@@ -155,6 +176,7 @@ void GodotAdmob::showRewardedVideo() {
 
 void GodotAdmob::_bind_methods() {
     CLASS_DB::bind_method("init",&GodotAdmob::init);
+    CLASS_DB::bind_method("initWithContentRating",&GodotAdmob::initWithContentRating);
     CLASS_DB::bind_method("loadBanner",&GodotAdmob::loadBanner);
     CLASS_DB::bind_method("showBanner",&GodotAdmob::showBanner);
     CLASS_DB::bind_method("hideBanner",&GodotAdmob::hideBanner);

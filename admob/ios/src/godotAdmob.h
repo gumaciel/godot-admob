@@ -43,6 +43,7 @@ protected:
 public:
 
     void init(bool isReal, int instanceId);
+    void initWithContentRating(bool isReal, int instanceId, bool child_directed, bool is_personalized, const String &max_ad_content_rate);
     void loadBanner(const String &bannerId, bool isOnTop);
     void showBanner();
     void hideBanner();
