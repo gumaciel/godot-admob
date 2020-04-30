@@ -14,19 +14,19 @@ var max_ad_content_rating = "G" #It's value must be "G", "PG", "T" or "MA".
 var is_real = false # Show real ad or test ad
 var is_top = true # Show the banner on top or bottom
 
-var ad_banner_id = {
+const AD_BANNER_ID = {
 	"Android": "ca-app-pub-3940256099942544/6300978111",
 	"iOS"    : "ca-app-pub-3940256099942544/2934735716"
 } 
 #[Replace with your Ad Unit ID and delete this message]
 
-var ad_interstitial_id = {
+const AD_INTERSTITIAL_ID = {
 	"Android": "ca-app-pub-3940256099942544/1033173712",
 	"iOS"    : "ca-app-pub-3940256099942544/4411468910"
 }
 #[Replace with your Ad Unit ID and delete this message]
 
-var ad_rewarded_id = {
+const AD_REWARDED_ID = {
 	"Android": "ca-app-pub-3940256099942544/5224354917",
 	"iOS"    : "ca-app-pub-3940256099942544/1712485313"
 }
@@ -51,15 +51,15 @@ func _ready():
 # Loaders
 func loadBanner():
 	if admob != null:
-		admob.loadBanner(ad_banner_id[platform_os], is_top)
+		admob.loadBanner(AD_BANNER_ID[platform_os], is_top)
 
 func loadInterstitial():
 	if admob != null:
-		admob.loadInterstitial(ad_interstitial_id[platform_os])
+		admob.loadInterstitial(AD_INTERSTITIAL_ID[platform_os])
 		
 func loadRewardedVideo():
 	if admob != null:
-		admob.loadRewardedVideo(ad_rewarded_id[platform_os])
+		admob.loadRewardedVideo(AD_REWARDED_ID[platform_os])
 
 # Events
 func _on_BtnBanner_toggled(pressed):
@@ -80,6 +80,9 @@ func _on_admob_network_error():
 
 func _on_admob_ad_loaded():
 	print("Ad loaded success")
+	if admob != null:
+		print(admob.getBannerWidth())
+		print(admob.getBannerHeight())
 	get_node("CanvasLayer/BtnBanner").set_disabled(false)
 
 func _on_interstitial_not_loaded():

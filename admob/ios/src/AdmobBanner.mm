@@ -176,11 +176,11 @@
 }
 
 - (int) getBannerWidth {
-    return bannerView.bounds.size.width;
+    return bannerView.bounds.size.width * [UIScreen mainScreen].scale;
 }
 
 - (int) getBannerHeight {
-    return bannerView.bounds.size.height;
+    return bannerView.bounds.size.height * [UIScreen mainScreen].scale;
 }
 
 
