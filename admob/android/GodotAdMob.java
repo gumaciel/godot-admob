@@ -442,9 +442,6 @@ public class GodotAdMob extends Godot.SingletonBase
 					@Override
 					public void onAdClosed() {
 						GodotLib.calldeferred(instance_id, "_on_interstitial_close", new Object[] { });
-
-						interstitialAd.loadAd(getAdRequest());
-
 						Log.w("godot", "AdMob: onAdClosed");
 					}
 				});

@@ -81,8 +81,7 @@ func _on_admob_network_error():
 func _on_admob_ad_loaded():
 	print("Ad loaded success")
 	if admob != null:
-		print(admob.getBannerWidth())
-		print(admob.getBannerHeight())
+		prints("BannerWidth: " + str(admob.getBannerWidth()), "BannerHeight: " + str(admob.getBannerHeight()))
 	get_node("CanvasLayer/BtnBanner").set_disabled(false)
 
 func _on_interstitial_not_loaded():
@@ -95,6 +94,7 @@ func _on_interstitial_loaded():
 func _on_interstitial_close():
 	print("Interstitial closed")
 	get_node("CanvasLayer/BtnInterstitial").set_disabled(true)
+	loadInterstitial()
 
 func _on_rewarded_video_ad_loaded():
 	print("Rewarded loaded success")
