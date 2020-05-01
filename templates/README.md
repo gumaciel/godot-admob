@@ -1,6 +1,6 @@
-# Templates generated with Godot Engine 2.1 and Admob Module (Not Firebase)
+# Templates generated with Godot Engine 2.1.6 and Admob Module (Not Firebase)
 
-This templates are compiled using Godot 2.1 (Stable) and this module (Admob).
+This templates are compiled using Godot 2.1.6 and this module (Admob).
 
 For the compilation I change the minSDKVersion to 9 for reach more devices.
 
