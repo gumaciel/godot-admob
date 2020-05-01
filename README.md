@@ -1,5 +1,7 @@
-AdMob
+AdMob 
 =====
+# **WE RECOMMEND THAT YOU USE VERSION 3.X>, THIS VERSION IS INSTABLE**
+
 This is the AdMob module for Godot Engine (https://github.com/okamstudio/godot)
 - Android & iOS
 - Banner
@@ -63,15 +65,6 @@ The following methods are available:
 # @param bool isReal Show real ad or test ad
 # @param int instance_id The instance id from Godot (get_instance_ID())
 init(isReal, instance_id)
-
-# Init AdMob with additional Content Rating parameters (Android and iOS)
-# @param bool isReal Show real ad or test ad
-# @param int instance_id The instance id from Godot (get_instance_ID())
-# @param boolean isForChildDirectedTreatment If isForChildDirectedTreatment is true, maxAdContetRating will be ignored (your maxAdContentRating would can not be other than "G")
-# @param boolean isPersonalized Ads are personalized by default, GDPR compliance within the European Economic Area may require you to disable personalization."
-# @param String maxAdContentRating It's value must be "G", "PG", "T" or "MA". If the rating of your app in Play Console and your config of maxAdContentRating in AdMob are not matched, your app can be banned by Google.
-initWithContentRating(isReal, instance_id, isForChildDirectedTreatment, isPersonalized, maxAdContentRating)
-
 
 # Banner Methods
 # --------------
